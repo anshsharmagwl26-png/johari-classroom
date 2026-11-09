@@ -1,45 +1,32 @@
-const { ADJECTIVES, computeQuadrants, normalizeSelection } = require('./script.js');
+# Johari Classroom
 
-function assert(condition, message) {
-  if (!condition) {
-    throw new Error(message);
-  }
-}
+A lightweight, browser-only classroom activity for exploring the Johari Window. It uses HTML, CSS, vanilla JavaScript, and LocalStorage; there is no account, backend, or external dependency.
 
-const uniqueLabels = ADJECTIVES.map((item) => item.adjective);
-assert(uniqueLabels.length === 55, `Expected 55 adjectives, found ${uniqueLabels.length}.`);
-assert(new Set(uniqueLabels).size === 55, 'Adjective list must contain exactly 55 unique values.');
+## Run
 
-const selfSelection = [
-  'Able',
-  'Calm',
-  'Friendly',
-  'Kind',
-  'Observant',
-  'Warm'
-];
+Open `index.html` in a browser, or serve this folder locally:
 
-const participantSelection = [
-  'Able',
-  'Caring',
-  'Friendly',
-  'Modest',
-  'Patient',
-  'Warm',
-  'Wise'
-];
+```powershell
+python -m http.server 8000
+```
 
-const quadrants = computeQuadrants(selfSelection, participantSelection);
-const open = quadrants.open;
-const blind = quadrants.blind;
-const hidden = quadrants.hidden;
-const unknown = quadrants.unknown;
+Then visit `http://localhost:8000`.
 
-assert(open.size + blind.size + hidden.size + unknown.size === 55, 'Quadrants must cover all 55 adjectives.');
-assert(normalizeSelection(['Able', 'Kind', 'Kind']).length === 2, 'Normalization should remove duplicates while preserving canonical order.');
-assert(open.has('Able'), 'Open should include the shared adjective Able.');
-assert(blind.has('Caring'), 'Blind should include participant-only selections.');
-assert(hidden.has('Calm'), 'Hidden should include self-only selections.');
-assert(unknown.has('Liberal'), 'Unknown should include adjectives not selected by either party.');
+Run the automated checks with `npm test` (Node.js required).
 
-console.log('Johari Classroom validation passed: 55 canonical adjectives and quadrant math verified.');
+## Classroom Flow
+
+1. Enter the subject’s name and an optional assessment title.
+2. The subject chooses 5–7 words from the canonical bank.
+3. Peers take turns on the same device, choosing 5–7 words each.
+4. Review the four quadrants, peer totals, and adjective frequencies.
+
+The vocabulary matches the linked reference project’s 55-word workshop bank, including its original spelling `Lamed`.
+
+## Data and Privacy
+
+Assessments are saved in the current browser’s LocalStorage and do not synchronize across browsers or devices. Each submitted peer turn updates only aggregate adjective counts and totals; individual peer combinations and participant names are not stored. A participant’s temporary selection is held in memory and cleared after submission. Exported JSON contains the self-assessment and aggregate results only. Treat shared-device access and browser storage accordingly; this app does not claim encryption or server-side anonymity.
+
+Imported files are checked for the supported format, exact canonical adjective keys, valid selection counts, and internally consistent peer totals. Print the results view or choose Save as PDF in the browser’s print dialog.
+
+This activity supports discussion and reflection; it is not a diagnostic instrument.
