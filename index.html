@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Johari Classroom helps teachers and students explore self-awareness through adjective selection and peer feedback."
+    />
+    <title>Johari Classroom</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container nav-shell">
+        <div class="brand-block">
+          <div class="brand-mark">J</div>
+          <div>
+            <p class="brand-kicker">Educational reflection</p>
+            <h1>Johari Classroom</h1>
+          </div>
+        </div>
+        <nav class="nav-links" aria-label="Main navigation">
+          <a href="#self-section">Self</a>
+          <a href="#participant-section">Feedback</a>
+          <a href="#results-section">Results</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container page-shell">
+      <section class="hero panel">
+        <div class="hero-copy">
+          <p class="eyebrow">Know yourself. See others. Grow together.</p>
+          <h2>Understand what is visible, hidden, shared, and still unknown.</h2>
+          <p>
+            The Johari Window helps classrooms explore how self-perception and peer perception
+            connect. Select adjectives that describe you, then invite anonymous peer feedback
+            to reveal how awareness changes across a group.
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="#self-section">Start self-assessment</a>
+            <button class="button secondary" id="scrollToResults" type="button">View results</button>
+          </div>
+        </div>
+        <div class="privacy-card" aria-live="polite">
+          <h3>Privacy notice</h3>
+          <p>
+            Assessment data is stored only in the current browser on this device. It is not
+            synchronized, encrypted, or uploaded to a server.
+          </p>
+          <p>No participant names are collected.</p>
+        </div>
+      </section>
+
+      <section id="self-section" class="panel">
+        <div class="section-head">
+          <div>
+            <p class="section-tag">Step 1</p>
+            <h2>Self-assessment</h2>
+          </div>
+          <span class="badge muted">Choose 5–7 adjectives</span>
+        </div>
+
+        <p class="helper-text">
+          Which adjectives best describe who you are right now? Pick the words that feel most
+          accurate to you.
+        </p>
+
+        <div id="selfSelectionMeta" class="selection-meta" aria-live="polite">
+          Selected 0 of 5–7 adjectives
+        </div>
+        <div id="self-chips" class="chip-grid" aria-label="Self assessment adjective selection"></div>
+        <div class="toolbar">
+          <button id="saveSelfAssessment" class="button primary" type="button">Save self-assessment</button>
+          <button id="clearSelfSelection" class="button ghost" type="button">Clear selection</button>
+        </div>
+      </section>
+
+      <section id="participant-section" class="panel">
+        <div class="section-head">
+          <div>
+            <p class="section-tag">Step 2</p>
+            <h2>Classroom feedback</h2>
+          </div>
+          <span class="badge">Anonymous participant</span>
+        </div>
+
+        <p class="helper-text">
+          Each new participant uses the same device and selects 5–7 adjectives for the subject.
+          Previous selections are cleared after submission.
+        </p>
+
+        <div id="participantSelectionMeta" class="selection-meta" aria-live="polite">
+          Selected 0 of 5–7 adjectives
+        </div>
+        <div id="participant-chips" class="chip-grid" aria-label="Participant adjective selection"></div>
+        <div class="toolbar">
+          <button id="submitParticipant" class="button primary" type="button">Submit feedback</button>
+          <button id="clearParticipant" class="button ghost" type="button">Clear participant</button>
+        </div>
+
+        <div class="stats-strip">
+          <div class="stat-box">
+            <span class="stat-label">Participants</span>
+            <strong id="participantCount">0</strong>
+          </div>
+          <div class="stat-box">
+            <span class="stat-label">Most selected</span>
+            <strong id="topWord">—</strong>
+          </div>
+        </div>
+      </section>
+
+      <section id="results-section" class="panel">
+        <div class="section-head">
+          <div>
+            <p class="section-tag">Step 3</p>
+            <h2>Johari Window</h2>
+          </div>
+          <div class="inline-actions">
+            <button id="exportData" class="button secondary" type="button">Export JSON</button>
+            <button id="printReport" class="button secondary" type="button">Print / Save PDF</button>
+          </div>
+        </div>
+
+        <div class="window-grid" aria-live="polite">
+          <article class="quadrant open">
+            <div class="quadrant-header">
+              <span>Open</span>
+              <span id="openCount" class="count-pill">0</span>
+            </div>
+            <p>Known to self and others.</p>
+            <ul id="openList" class="quadrant-list"></ul>
+          </article>
+
+          <article class="quadrant blind">
+            <div class="quadrant-header">
+              <span>Blind</span>
+              <span id="blindCount" class="count-pill">0</span>
+            </div>
+            <p>Seen by others but not by the self.</p>
+            <ul id="blindList" class="quadrant-list"></ul>
+          </article>
+
+          <article class="quadrant hidden">
+            <div class="quadrant-header">
+              <span>Hidden</span>
+              <span id="hiddenCount" class="count-pill">0</span>
+            </div>
+            <p>Known to self but not shared with others.</p>
+            <ul id="hiddenList" class="quadrant-list"></ul>
+          </article>
+
+          <article class="quadrant unknown">
+            <div class="quadrant-header">
+              <span>Unknown</span>
+              <span id="unknownCount" class="count-pill">0</span>
+            </div>
+            <p>Not yet known to self or others.</p>
+            <ul id="unknownList" class="quadrant-list"></ul>
+          </article>
+        </div>
+
+        <div class="frequency-panel">
+          <div class="frequency-header">
+            <h3>Participant frequency</h3>
+            <span class="badge muted">Counts participants, not duplicate selections</span>
+          </div>
+          <div id="frequencyList" class="frequency-list"></div>
+        </div>
+
+        <div class="toolbar footer-actions">
+          <label class="button secondary import-button" for="importFile">Import JSON</label>
+          <input id="importFile" type="file" accept="application/json" />
+          <button id="clearSavedAssessments" class="button ghost" type="button">Clear saved assessments</button>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="section-head">
+          <div>
+            <p class="section-tag">Records</p>
+            <h2>Saved assessments</h2>
+          </div>
+        </div>
+        <div id="savedAssessmentList" class="saved-list" aria-live="polite"></div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
